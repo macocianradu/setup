@@ -39,8 +39,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 fi
 
-nvim ~/projects/setup/.config/nvim/lua/wicked/packer.lua --headless\
-    -c 'so' -c 'PackerSync' -c 'qall'
+sudo nvim --headless nvim ~/projects/setup/.config/nvim/lua/wicked/packer.lua\
+    -c 'autocmd User PackerComplete quitall' -c 'so' -c 'PackerSync'
 
 echo "----- Copying NVIM configuration -----"
 if [ ! -d "$HOME/.config" ]; then
