@@ -35,7 +35,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     else
         curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
         tar xzf nvim-macos-arm64.tar.gz
-        mv nvim-macos-arm64.tar.gz ~/Applications/nvim/
+        mv nvim-macos-arm64 ~/Applications/nvim/
     fi
 fi
 
