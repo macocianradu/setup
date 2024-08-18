@@ -39,6 +39,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 fi
 
+nvim ~/projects/setup/.config/nvim/lua/wicked/packer.lua --headless\
+    -c 'so' -c 'PackerSync' -c 'qall'
+
 echo "----- Copying NVIM configuration -----"
 if [ ! -d "$HOME/.config" ]; then
     echo ".config folder not found. Creating one"
@@ -50,6 +53,3 @@ if [ ! -d "$HOME/.vim" ]; then
     mkdir ~/.vim
 fi
 ln -s ~/projects/setup/.vim/undodir ~/.vim/undodir
-
-cd ~/projects/setup/.config/nvim/lua/wicked
-nvim packer.lua --headless -c 'so' -c 'PackerSync' -c 'qall'
