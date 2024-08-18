@@ -18,7 +18,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 cd nvim_config
-ln -s .config/nvim ~/.config/nvim
-ln -s .vim/undodir ~/.vim/undodir
+ln -s ~/projects/nvim_config/.config/nvim ~/.config/nvim
+ln -s ~/projects/nvim_config/.vim/undodir ~/.vim/undodir
 
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
