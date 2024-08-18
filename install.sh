@@ -16,43 +16,41 @@ else
         ~/projects/homefull-gui
 fi
 
-echo "----- Cloning packer -----"
-if [ -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
-    echo "[Skipped] Packer already exists"
-else
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim\
-        ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-fi
-
 echo "----- Downloading NVIM -----"
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    nvim_path="/opt/nvim-linux64"
+    echo "----- Found Linux-GNU system -----"
+    echo "Downloading nvim"
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
     sudo rm -rf /opt/nvim
+    echo "Copying NVIM to /opt/nvim-linux64"
     sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> ~/.bashrc
-    . ~/.bashrc
+    echo "Adding NVIM to PATH in ./bashrc"
+    echo "export PATH="\$PATH:$nvim_path/bin"" >> ~/.bashrc
+    echo "NVIM added to path, run '. ~/.bashrc' to reload PATH variable"
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+    nvim_path=~/Applications/nvim
     if [ -d "$HOME/Applications/nvim" ]; then
         echo "[Skipped] NVIM already installed"
     else
         curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
         tar xzf nvim-macos-arm64.tar.gz
-        mv nvim-macos-arm64 ~/Applications/nvim/
+        mv nvim-macos-arm64 $nvim_path
     fi
 fi
 
-sudo nvim --headless ~/projects/setup/.config/nvim/lua/wicked/packer.lua\
-    -c 'autocmd User PackerComplete quitall' -c 'so' -c 'PackerSync'
+# sudo $nvim_path/bin/nvim --headless ~/projects/setup/.config/nvim/lua/wicked/packer.lua\
+#    -c 'autocmd User PackerComplete quitall' -c 'so' -c 'PackerSync'
 
 echo "----- Copying NVIM configuration -----"
 if [ ! -d "$HOME/.config" ]; then
     echo ".config folder not found. Creating one"
     mkdir ~/.config
 fi
-ln -s ~/projects/setup/.config/nvim ~/.config/nvim
+ln -s ~/projects/setup/.config/nvim ~/.config/
 if [ ! -d "$HOME/.vim" ]; then
     echo ".vim folder not found. Creating one"
     mkdir ~/.vim
 fi
-ln -s ~/projects/setup/.vim/undodir ~/.vim/undodir
+ln -s ~/projects/setup/.vim/undodir ~/.vim/
