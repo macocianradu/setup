@@ -40,7 +40,15 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 echo "----- Copying NVIM configuration -----"
+if [ ! -d "~/.config" ]; then
+    echo ".config folder not found. Creating one"
+    mkdir ~/.confg
+fi
 ln -s ~/projects/setup/.config/nvim ~/.config/nvim
+if [ ! -d "~/.vim" ]; then
+    echo ".vim folder not found. Creating one"
+    mkdir ~/.confg
+fi
 ln -s ~/projects/setup/.vim/undodir ~/.vim/undodir
 
 echo "----- Running PackerSync -----"
