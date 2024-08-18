@@ -27,8 +27,11 @@ fi
 echo "----- Downloading NVIM -----"
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    tar xzf nvim-linux64.tar.gz
-    usr/
+    sudo rm -rf /opt/nvim
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> ~/.bashrc
+    . ~/.bashrc
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     if [ -d "$HOME/Applications/nvim" ]; then
         echo "[Skipped] NVIM already installed"
