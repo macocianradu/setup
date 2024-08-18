@@ -51,5 +51,5 @@ if [ ! -d "$HOME/.vim" ]; then
 fi
 ln -s ~/projects/setup/.vim/undodir ~/.vim/undodir
 
-echo "----- Running PackerSync -----"
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+cd ~/projects/setup/.config/nvim/lua/wicked
+nvim packer.lua --headless -c 'so' -c 'PackerSync' -c 'qall'
