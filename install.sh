@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "----- Cloning homefull-api -----"
-if [ -d "~projects/homefull-api" ]; then
+if [ -d "$HOME/projects/homefull-api" ]; then
     echo "[Skipped] homefull-api already exists"
 else
     git clone https://github.com/macocianradu/homefull-api.git\
@@ -9,7 +9,7 @@ else
 fi
 
 echo "----- Cloning homefull-gui -----"
-if [ -d "~projects/homefull-gui" ]; then
+if [ -d "$HOME/projects/homefull-gui" ]; then
     echo "[Skipped] homefull-gui already exists"
 else
     git clone https://github.com/macocianradu/homefull-gui.git\
@@ -17,7 +17,7 @@ else
 fi
 
 echo "----- Cloning packer -----"
-if [ -d "~/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
+if [ -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then
     echo "[Skipped] Packer already exists"
 else
     git clone --depth 1 https://github.com/wbthomason/packer.nvim\
@@ -30,7 +30,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     tar xzf nvim-linux64.tar.gz
     usr/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    if [ -d "~Applications/nvim" ]; then
+    if [ -d "$HOME/Applications/nvim" ]; then
         echo "[Skipped] NVIM already installed"
     else
         curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
@@ -40,14 +40,14 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 echo "----- Copying NVIM configuration -----"
-if [ ! -d "~/.config" ]; then
+if [ ! -d "$HOME/.config" ]; then
     echo ".config folder not found. Creating one"
-    mkdir ~/.confg
+    mkdir ~/.config
 fi
 ln -s ~/projects/setup/.config/nvim ~/.config/nvim
-if [ ! -d "~/.vim" ]; then
+if [ ! -d "$HOME/.vim" ]; then
     echo ".vim folder not found. Creating one"
-    mkdir ~/.confg
+    mkdir ~/.vim
 fi
 ln -s ~/projects/setup/.vim/undodir ~/.vim/undodir
 
