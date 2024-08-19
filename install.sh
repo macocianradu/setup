@@ -30,7 +30,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "NVIM added to path, run '. ~/.bashrc' to reload PATH variable"
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    nvim_path=~/Applications/nvim
+    nvim_path="~/Applications/nvim"
     if [ -d "$HOME/Applications/nvim" ]; then
         echo "[Skipped] NVIM already installed"
     else
@@ -40,8 +40,21 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 fi
 
-# sudo $nvim_path/bin/nvim --headless ~/projects/setup/.config/nvim/lua/wicked/packer.lua\
-#    -c 'autocmd User PackerComplete quitall' -c 'so' -c 'PackerSync'
+if [[ ! -d "$HOME/.local/share/nvim/roslyn" ]] then
+    echo "----- Roslyn LS not detected: Downloading now -----"
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        ls_url="https://zaxvsblobprodwus215.vsblob.vsassets.io/b-63b6279ad2f14bc3a21cdb7614e92831/5787C047B250801723E628CEF9CA582F82C848FE406E4553BA02BF5ECA870EBD00.blob?sv=2019-07-07&sr=b&si=1&sig=L9sr005TS6IonkYAeB7KYh7kW9CnWNr9MAqNu4ypEUo%3D&spr=https&se=2024-08-19T00%3A25%3A13Z&rscl=x-e2eid-ec16adad-34c8456c-80536072-32aeec7d-session-ec16adad-34c8456c-80536072-32aeec7d&rscd=attachment%3B%20filename%3D%22Microsoft.CodeAnalysis.LanguageServer.linux-x64.4.12.0-2.24417.1.nupkg%22&P1=1724037911&P2=1&P3=2&P4=gWMe2EcOpfH3DR3WcrRHHNy7Tdsz8N7QuAZdgHUJfyk%3d"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        ls_url="https://etjvsblobprodwus2172.vsblob.vsassets.io/b-63b6279ad2f14bc3a21cdb7614e92831/270B5B41FCC924B78FFAAEC2E2F6623DDEE782E2EB8AD71C9661A7144E9B399C00.blob?sv=2019-07-07&sr=b&si=1&sig=Y2Eil5keeY2ZyHlm%2FOZPZz%2FfkZhWgII31wn0q0Kuu0g%3D&spr=https&se=2024-08-19T00%3A42%3A54Z&rscl=x-e2eid-0ae75aa5-b81e4f13-bef4006c-4791577b-session-0ae75aa5-b81e4f13-bef4006c-4791577b&rscd=attachment%3B%20filename%3D%22Microsoft.CodeAnalysis.LanguageServer.osx-arm64.4.12.0-2.24417.1.nupkg%22&P1=1724038971&P2=1&P3=2&P4=4%2b936oMTgkM4TFkxnmVVzhCHlRl4L3LpTq2trVyzSMQ%3d"
+    fi
+    mkdir temp
+    curl $ls_url\
+        -o temp/language_server.nupkg
+    cd temp
+    unzip temp/language_server.nupkg
+    mv temp/content/LanguageServer/linux-x64 $HOME/.local/share/nvim/roslyn
+    rm -rf temp
+fi
 
 echo "----- Copying NVIM configuration -----"
 if [ ! -d "$HOME/.config" ]; then
