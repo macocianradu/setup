@@ -44,8 +44,9 @@ elif [[ "$OSTYPE" == "msys"* ]]; then
         echo "[Skipped NVIM already installed"
     else
         echo "----- Downloading nvim -----"
-        curl -o nvim-win64.msi https://github.com/neovim/neovim/releases/latest/download/nvim-win64.msi
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-win64.msi
         msiexec /i ./nvim-win64.msi /passive 
+        rm -rf nvim-win64.msi
     fi
 fi
 
