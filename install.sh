@@ -17,36 +17,33 @@ else
 fi
 
 echo "----- Downloading NVIM -----"
-case "$OSTYPE" in
-    linux*) 
-        nvim_path="/opt/nvim-linux64"
-        echo "Downloading nvim"
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-        sudo rm -rf /opt/nvim
-        echo "Copying NVIM to /opt/nvim-linux64"
-        sudo tar -C /opt -xzf nvim-linux64.tar.gz
-        echo "Adding NVIM to PATH in ./bashrc"
-        echo "export PATH="\$PATH:$nvim_path/bin"" >> ~/.bashrc
-        echo "NVIM added to path, run '. ~/.bashrc' to reload PATH variable"
-        ;;
-    darwin*)
-        nvim_path="~/Applications/nvim"
-        if [ -d "$HOME/Applications/nvim" ]; then
-            echo "[Skipped] NVIM already installed"
-        else
-            curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
-            tar xzf nvim-macos-arm64.tar.gz
-            mv nvim-macos-arm64 $nvim_path
-        fi
-        ;;
-    msys*)
-        if [ "$env:Path" == "*Neovim*" ]; then
-            echo "[Skipped NVIM already installed"
-        else
-            curl -o nvim-win64.msi https://github.com/neovim/neovim/releases/latest/download/nvim-win64.msi
-            ./nvim-win64.msi /passive
-        fi
-esac
+if [[ "$OSTYPE" == "linux"* ]]; then
+    nvim_path="/opt/nvim-linux64"
+    echo "Downloading nvim"
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    sudo rm -rf /opt/nvim
+    echo "Copying NVIM to /opt/nvim-linux64"
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    echo "Adding NVIM to PATH in ./bashrc"
+    echo "export PATH="\$PATH:$nvim_path/bin"" >> ~/.bashrc
+    echo "NVIM added to path, run '. ~/.bashrc' to reload PATH variable"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    nvim_path="~/Applications/nvim"
+    if [ -d "$HOME/Applications/nvim" ]; then
+        echo "[Skipped] NVIM already installed"
+    else
+        curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
+        tar xzf nvim-macos-arm64.tar.gz
+        mv nvim-macos-arm64 $nvim_path
+    fi
+elif [[ "$OSTYPE" == "msys"* ]]; then
+    if [ "$env:Path" == "*Neovim*" ]; then
+        echo "[Skipped NVIM already installed"
+    else
+        curl -o nvim-win64.msi https://github.com/neovim/neovim/releases/latest/download/nvim-win64.msi
+        ./nvim-win64.msi /passive
+    fi
+fi
 
 if [[ ! -d "$HOME/.local/share/nvim/roslyn" ]] then
     echo "----- Roslyn LS not detected: Downloading now -----"
