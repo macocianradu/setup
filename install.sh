@@ -18,6 +18,7 @@ fi
 
 echo "----- Downloading NVIM -----"
 if [[ "$OSTYPE" == "linux"* ]]; then
+    echo "----- Linux-Gnu detected -----"
     nvim_path="/opt/nvim-linux64"
     echo "Downloading nvim"
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
@@ -28,6 +29,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
     echo "export PATH="\$PATH:$nvim_path/bin"" >> ~/.bashrc
     echo "NVIM added to path, run '. ~/.bashrc' to reload PATH variable"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "----- OSX detected -----"
     nvim_path="~/Applications/nvim"
     if [ -d "$HOME/Applications/nvim" ]; then
         echo "[Skipped] NVIM already installed"
@@ -37,6 +39,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         mv nvim-macos-arm64 $nvim_path
     fi
 elif [[ "$OSTYPE" == "msys"* ]]; then
+    echo "----- Windows detected -----"
     if [ "$env:Path" == "*Neovim*" ]; then
         echo "[Skipped NVIM already installed"
     else
