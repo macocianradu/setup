@@ -45,7 +45,7 @@ elif [[ "$OSTYPE" == "msys"* ]]; then
     else
         echo "----- Downloading nvim -----"
         curl -o nvim-win64.msi https://github.com/neovim/neovim/releases/latest/download/nvim-win64.msi
-        ./nvim-win64.msi "/passive"
+        msiexec ./nvim-win64.msi "/passive"
     fi
 fi
 
