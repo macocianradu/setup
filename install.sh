@@ -16,11 +16,10 @@ else
         ~/projects/homefull-gui
 fi
 
-echo "----- Downloading NVIM -----"
 if [[ "$OSTYPE" == "linux"* ]]; then
     echo "----- Linux-Gnu detected -----"
     nvim_path="/opt/nvim-linux64"
-    echo "Downloading nvim"
+    echo "----- Downloading NVIM -----"
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
     sudo rm -rf /opt/nvim
     echo "Copying NVIM to /opt/nvim-linux64"
@@ -34,6 +33,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     if [ -d "$HOME/Applications/nvim" ]; then
         echo "[Skipped] NVIM already installed"
     else
+        echo "----- Downloading nvim -----"
         curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos-arm64.tar.gz
         tar xzf nvim-macos-arm64.tar.gz
         mv nvim-macos-arm64 $nvim_path
@@ -43,6 +43,7 @@ elif [[ "$OSTYPE" == "msys"* ]]; then
     if [ "$env:Path" == "*Neovim*" ]; then
         echo "[Skipped NVIM already installed"
     else
+        echo "----- Downloading nvim -----"
         curl -o nvim-win64.msi https://github.com/neovim/neovim/releases/latest/download/nvim-win64.msi
         ./nvim-win64.msi /passive
     fi
