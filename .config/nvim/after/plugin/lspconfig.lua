@@ -10,7 +10,7 @@ local angular_cmd = {
     project_library_path .. '@angular/language-server'
 }
 
-lspconfig.tsserver.setup {}
+lspconfig.ts_ls.setup {}
 lspconfig.angularls.setup({
     cmd = angular_cmd,
     on_new_config = function(new_config, new_root_dir)
