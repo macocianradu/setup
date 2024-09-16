@@ -33,10 +33,16 @@ require("lazy").setup({
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
         'mbbill/undotree',
-        'tpope/vim-fugitive',
         'idanarye/vim-merginal',
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
+        {
+            "NeogitOrg/neogit",
+            dependencies = {
+                "sindrets/diffview.nvim", -- optional - Diff integration
+            },
+            config = true
+        },
         'seblj/roslyn.nvim',
         'neovim/nvim-lspconfig',
         {
