@@ -24,31 +24,31 @@ lspconfig.cssls.setup {
     capabilities = capabilities,
 }
 lspconfig.lua_ls.setup {}
-require('roslyn').setup({
-    config = {
-        settings = {
-            ["csharp|inlay_hints"] = {
-                csharp_enable_inlay_hints_for_implicit_object_creation = true,
-                csharp_enable_inlay_hints_for_implicit_variable_types = true,
-                csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-                csharp_enable_inlay_hints_for_types = true,
-                dotnet_enable_inlay_hints_for_indexer_parameters = true,
-                dotnet_enable_inlay_hints_for_literal_parameters = true,
-                dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-                dotnet_enable_inlay_hints_for_other_parameters = true,
-                dotnet_enable_inlay_hints_for_parameters = true,
-                dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-                dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-                dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
-            },
-        },
-    },
-    exe = {
-        "dotnet",
-        vim.fs.joinpath(vim.fn.stdpath("data"), "roslyn", "Microsoft.CodeAnalysis.LanguageServer.dll"),
-    },
-    filewatching = true,
-})
+-- require('roslyn').setup({
+--     config = {
+--         settings = {
+--             ["csharp|inlay_hints"] = {
+--                 csharp_enable_inlay_hints_for_implicit_object_creation = true,
+--                 csharp_enable_inlay_hints_for_implicit_variable_types = true,
+--                 csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+--                 csharp_enable_inlay_hints_for_types = true,
+--                 dotnet_enable_inlay_hints_for_indexer_parameters = true,
+--                 dotnet_enable_inlay_hints_for_literal_parameters = true,
+--                 dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+--                 dotnet_enable_inlay_hints_for_other_parameters = true,
+--                 dotnet_enable_inlay_hints_for_parameters = true,
+--                 dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+--                 dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+--                 dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+--             },
+--         },
+--     },
+--     exe = {
+--         "dotnet",
+--         vim.fs.joinpath(vim.fn.stdpath("data"), "roslyn", "Microsoft.CodeAnalysis.LanguageServer.dll"),
+--     },
+--     filewatching = true,
+-- })
 
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -71,12 +71,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+-- require('blink').setup({
+--   cmp = {
+--     sources = {
+--       { name = 'lsp' },
+--       { name = 'buffer' },
+--       { name = 'path' },
+--       { name = 'snippets' },
+--     },
+--     mapping = {
+--       ['<C-j>'] = 'select_next',
+--       ['<C-k>'] = 'select_prev',
+--       ['<Tab>'] = 'confirm',
+--       ['<C-Space>'] = 'trigger',
+--     },
+--     snippets = {
+--       expand = function(args)
+--         -- Optional: integrate with luasnip if you still use it
+--         require('luasnip').lsp_expand(args.body)
+--       end
+--     }
+--   }
+-- })
+
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
--- this is the function that loads the extra snippets to luasnip
--- from rafamadriz/friendly-snippets
-require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup({
     sources = {

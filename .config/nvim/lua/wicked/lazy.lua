@@ -18,7 +18,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-        'wbthomason/packer.nvim',
         {
             'nvim-telescope/telescope.nvim',
             dependencies = { 'nvim-lua/plenary.nvim' }
@@ -49,22 +48,29 @@ require("lazy").setup({
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
         },
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/nvim-cmp',
+        'L3MON4D3/LuaSnip',
+        -- {
+        --     "saghen/blink.nvim",
+        --     config = function()
+        --       require("blink").setup({
+        --         modules = {
+        --           cmp = true,
+        --           luasnip = true,
+        --           -- optionally enable more: lsp, luasnip, etc.
+        --         },
+        --       })
+        --     end
+        -- },
 
-        {
-            'VonHeikemen/lsp-zero.nvim',
-            dependencies = {
-                { 'hrsh7th/nvim-cmp' },
-                { 'hrsh7th/cmp-nvim-lsp' },
-                { 'L3MON4D3/LuaSnip' },
-            }
-        },
         {
             'MoaidHathot/dotnet.nvim',
             config = function()
                 require("dotnet").setup({})
             end
         },
-        -- add your plugins here
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
