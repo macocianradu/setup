@@ -33,6 +33,7 @@ require("lazy").setup({
         'theprimeagen/harpoon',
         'mbbill/undotree',
         'idanarye/vim-merginal',
+        "sphamba/smear-cursor.nvim",
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
         {
