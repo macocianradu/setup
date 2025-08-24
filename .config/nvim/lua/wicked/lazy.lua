@@ -32,6 +32,7 @@ require("lazy").setup({
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
         'mbbill/undotree',
+        'nvim-telescope/telescope-ui-select.nvim',
         'idanarye/vim-merginal',
         "sphamba/smear-cursor.nvim",
         'williamboman/mason.nvim',
