@@ -29,6 +29,7 @@ require("lazy").setup({
             end
         },
 
+        'macocianradu/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
         'mbbill/undotree',
@@ -44,7 +45,6 @@ require("lazy").setup({
             },
             config = true
         },
-        'seblj/roslyn.nvim',
         'neovim/nvim-lspconfig',
         {
             'nvim-lualine/lualine.nvim',
