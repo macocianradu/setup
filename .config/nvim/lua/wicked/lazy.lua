@@ -33,9 +33,10 @@ require("lazy").setup({
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
         'mbbill/undotree',
+        'tpope/vim-surround',
         'nvim-telescope/telescope-ui-select.nvim',
         'idanarye/vim-merginal',
-        "sphamba/smear-cursor.nvim",
+        'sphamba/smear-cursor.nvim',
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
         {
@@ -54,25 +55,14 @@ require("lazy").setup({
         'hrsh7th/cmp-buffer',
         'hrsh7th/nvim-cmp',
         'L3MON4D3/LuaSnip',
-        -- {
-        --     "saghen/blink.nvim",
-        --     config = function()
-        --       require("blink").setup({
-        --         modules = {
-        --           cmp = true,
-        --           luasnip = true,
-        --           -- optionally enable more: lsp, luasnip, etc.
-        --         },
-        --       })
-        --     end
-        -- },
-
         {
-            'MoaidHathot/dotnet.nvim',
-            config = function()
-                require("dotnet").setup({})
-            end
-        },
+            'mfussenegger/nvim-dap',
+            dependencies = {
+                'mfussenegger/nvim-dap-python',
+                'rcarriga/nvim-dap-ui',
+                'nvim-neotest/nvim-nio'
+            }
+        }
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
