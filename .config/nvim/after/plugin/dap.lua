@@ -38,7 +38,7 @@ dap.configurations.python = {
         args = {
             "--addons-path", "/home/odoo/Projects/odoo/enterprise/,/home/odoo/Projects/odoo/odoo/addons/",
             "--dev", "all",
-            "-d", "rd-demo"
+            "-d", "rd-pos"
         }
     }
 }
