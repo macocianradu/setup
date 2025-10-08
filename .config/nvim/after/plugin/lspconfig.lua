@@ -4,13 +4,26 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.config("*", {
     capabilities = capabilities
 })
-vim.lsp.config("ts_ls", {})
+-- vim.lsp.config("ts_ls", {})
 vim.lsp.config("ruff", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
 vim.lsp.config("odoo_ls", {})
+vim.lsp.config("lemminx", {})
+vim.lsp.config("eslint", {
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  root_markers = { ".eslintrc", ".eslintrc.json", ".eslintrc.js", "package.json", ".git" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+  settings = {
+    validate = "on",
+    packageManager = "npm",
+    workingDirectory = { mode = "auto" },
+    debug = true,
+    format = true,
+  },
+})
 
-vim.lsp.enable({"odoo_ls", "ts_ls", "ruff", "cssls", "lua_ls"})
+vim.lsp.enable({"odoo_ls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
@@ -61,6 +74,15 @@ cmp.setup({
             require('luasnip').lsp_expand(args.body)
         end,
     },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "xml",
+    callback = function()
+        vim.bo.indentexpr = ""
+        vim.bo.cindent = false
+        vim.bo.smartindent = false
+    end
 })
 
 -- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

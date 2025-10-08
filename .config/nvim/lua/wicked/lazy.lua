@@ -29,15 +29,22 @@ require("lazy").setup({
             end
         },
 
-        'macocianradu/odoo-neovim',
+        {
+            dir = '/home/odoo/Projects/odoo-neovim',
+            lazy = false,
+        },
+        --{
+        --    'macocianradu/odoo-neovim',
+        --    branch = "Nvim_Plugin",
+        --},
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
         'mbbill/undotree',
         'tpope/vim-surround',
         'nvim-telescope/telescope-ui-select.nvim',
-        'idanarye/vim-merginal',
         'sphamba/smear-cursor.nvim',
         'williamboman/mason.nvim',
+        'tpope/vim-projectionist',
         'williamboman/mason-lspconfig.nvim',
         {
             "NeogitOrg/neogit",
@@ -56,12 +63,13 @@ require("lazy").setup({
         'hrsh7th/nvim-cmp',
         'L3MON4D3/LuaSnip',
         {
-            'mfussenegger/nvim-dap',
+            'mfussenegger/nvim-dap-python',
             dependencies = {
-                'mfussenegger/nvim-dap-python',
+                'mfussenegger/nvim-dap',
                 'rcarriga/nvim-dap-ui',
                 'nvim-neotest/nvim-nio'
-            }
+            },
+            build = false,
         }
     },
     -- Configure any other settings here. See the documentation for more details.
