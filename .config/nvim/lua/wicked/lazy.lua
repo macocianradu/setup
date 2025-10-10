@@ -30,20 +30,19 @@ require("lazy").setup({
         },
 
         {
-            dir = '/home/odoo/Projects/odoo-neovim',
-            lazy = false,
+             dir = '/home/odoo/Projects/odoo-neovim',
+             lazy = false,
         },
-        --{
-        --    'macocianradu/odoo-neovim',
-        --    branch = "Nvim_Plugin",
-        --},
+        --'odoo/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
+        'petertriho/nvim-scrollbar',
         'mbbill/undotree',
         'tpope/vim-surround',
         'nvim-telescope/telescope-ui-select.nvim',
         'sphamba/smear-cursor.nvim',
         'williamboman/mason.nvim',
+        'lewis6991/gitsigns.nvim',
         'tpope/vim-projectionist',
         'williamboman/mason-lspconfig.nvim',
         {
