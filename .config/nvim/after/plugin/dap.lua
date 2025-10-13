@@ -16,6 +16,18 @@ dap.listeners.after.event_exited["dapui_config"] = function()
 end
 
 require("dap-python").setup("~/Projects/odoo/venv/bin/python3")
+dap.adapters['pwa-chrome'] = {
+    type = 'server',
+    host = 'localhost',
+    port = '${port}',
+    executable = {
+        command = 'node',
+        args = {
+            vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js',
+            '${port}',
+        },
+    }
+}
 
 vim.keymap.set("n", "<leader>5", function() dap.continue() end)
 vim.keymap.set("n", "<leader>6", function() dap.step_over() end)
@@ -40,5 +52,19 @@ dap.configurations.python = {
             "--dev", "all",
             "-d", "rd-pos"
         }
+    }
+}
+
+dap.configurations.javascript = {
+    {
+        type = "pwa-chrome",
+        request = "attach",
+        name = "Launch Odoo JS Tour",
+        program = "${file}",
+        cwd = vim.fn.getcwd(),
+        port = 9222,
+        webRoot = '${workspaceFolder}',
+        sourceMaps = true,
+        protocol = 'inspector',
     }
 }
