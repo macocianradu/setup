@@ -25,5 +25,13 @@ require 'nvim-treesitter.configs'.setup {
     indent = {
         enable = true,
         disable = { "xml", "python" },
-    }
+    },
+
+    fold = {
+        enable = true,
+    },
 }
+
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldenable = true
