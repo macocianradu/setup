@@ -28,12 +28,7 @@ require("lazy").setup({
                 vim.cmd('colorscheme everforest')
             end
         },
-
-        {
-             dir = '/home/odoo/Projects/odoo-neovim',
-             lazy = false,
-        },
-        --'odoo/odoo-neovim',
+        'odoo/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
         'petertriho/nvim-scrollbar',
@@ -75,5 +70,8 @@ require("lazy").setup({
     -- colorscheme that will be used when installing plugins.
     install = { colorscheme = { "everforest" } },
     -- automatically check for plugin updates
-    checker = { enabled = true },
+    checker = {
+        enabled = true,
+        frequency = 86400
+    }
 })
