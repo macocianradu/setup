@@ -53,6 +53,10 @@ require("lazy").setup({
             dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
         },
         'hrsh7th/cmp-nvim-lsp',
+        {
+            'stevearc/oil.nvim',
+            dependencies = {{ "nvim-mini/mini.icons" }}
+        },
         'hrsh7th/cmp-buffer',
         'hrsh7th/nvim-cmp',
         'L3MON4D3/LuaSnip',
