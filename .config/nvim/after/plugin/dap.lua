@@ -117,7 +117,7 @@ dap.configurations.python = {
         args = {
             "--addons-path", "/home/admac/projects/odoo/enterprise/,/home/admac/projects/odoo/odoo/addons/",
             "--dev", "all",
-            "-d", "rd-pos"
+            "-d", "viva-integration"
         }
     }
 }
