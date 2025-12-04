@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", function ()
-    require("oil").open_float()
+    require("oil").toggle_float()
 end)
 
 vim.keymap.set("n", "<leader>u", ":UndotreeShow<CR>")
