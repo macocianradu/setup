@@ -8,7 +8,13 @@ vim.lsp.config("*", {
 vim.lsp.config("ruff", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
-vim.lsp.config("odoo_ls", {})
+vim.lsp.config("odoo_ls", {
+    cmd = {
+        vim.fn.expand('$HOME/.local/share/nvim/odoo/odoo_ls_server'),
+        '--config-path',
+        vim.fn.expand('$HOME/projects/odoo/odools.toml'),
+    }
+})
 vim.lsp.config("lemminx", {})
 vim.lsp.config("eslint", {
   cmd = { "vscode-eslint-language-server", "--stdio" },
