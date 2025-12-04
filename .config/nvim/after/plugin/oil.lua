@@ -8,5 +8,9 @@ require("oil").setup({
             winblend = 15,
         },
         preview_split = "vertical"
-    }
+    },
+    keymaps = {
+        ["q"] = "actions.close",
+        ["<Esc>"] = "actions.close",
+    },
 })
