@@ -11,8 +11,7 @@ vim.lsp.config("lua_ls", {})
 vim.lsp.config("odoo_ls", {
     cmd = {
         vim.fn.expand('$HOME/.local/share/nvim/odoo/odoo_ls_server'),
-        '--config-path',
-        vim.fn.expand('$HOME/projects/odoo/odools.toml'),
+        '--config-path', vim.fn.expand('$HOME/projects/odoo/odools.toml'),
     }
 })
 vim.lsp.config("lemminx", {})

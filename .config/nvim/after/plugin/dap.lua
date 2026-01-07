@@ -114,11 +114,14 @@ dap.configurations.python = {
         pythonPath = function()
             return "/home/admac/projects/odoo/venv/bin/python3"
         end,
-        args = {
-            "--addons-path", "/home/admac/projects/odoo/enterprise/,/home/admac/projects/odoo/odoo/addons/",
-            "--dev", "all",
-            "-d", "viva-integration"
-        }
+        args = function()
+            local db_name = vim.fn.input('Odoo DB: ', 'master')
+            return {
+                "--addons-path", "/home/admac/projects/odoo/enterprise/,/home/admac/projects/odoo/odoo/addons/",
+                "--dev", "all",
+                "-d", db_name
+            }
+        end
     }
 }
 
