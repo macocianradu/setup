@@ -21,4 +21,18 @@ require 'nvim-treesitter.configs'.setup {
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
     },
+
+    indent = {
+        enable = true,
+        disable = { "xml", "python" },
+    },
+
+    fold = {
+        enable = true,
+    },
 }
+
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99

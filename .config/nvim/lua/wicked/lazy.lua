@@ -28,14 +28,17 @@ require("lazy").setup({
                 vim.cmd('colorscheme everforest')
             end
         },
-
+        'odoo/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
         'theprimeagen/harpoon',
+        'petertriho/nvim-scrollbar',
         'mbbill/undotree',
+        'tpope/vim-surround',
         'nvim-telescope/telescope-ui-select.nvim',
-        'idanarye/vim-merginal',
-        "sphamba/smear-cursor.nvim",
+        'sphamba/smear-cursor.nvim',
         'williamboman/mason.nvim',
+        'lewis6991/gitsigns.nvim',
+        'tpope/vim-projectionist',
         'williamboman/mason-lspconfig.nvim',
         {
             "NeogitOrg/neogit",
@@ -44,39 +47,35 @@ require("lazy").setup({
             },
             config = true
         },
-        'seblj/roslyn.nvim',
         'neovim/nvim-lspconfig',
         {
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
         },
         'hrsh7th/cmp-nvim-lsp',
+        {
+            'stevearc/oil.nvim',
+            dependencies = {{ "nvim-mini/mini.icons" }}
+        },
         'hrsh7th/cmp-buffer',
         'hrsh7th/nvim-cmp',
         'L3MON4D3/LuaSnip',
-        -- {
-        --     "saghen/blink.nvim",
-        --     config = function()
-        --       require("blink").setup({
-        --         modules = {
-        --           cmp = true,
-        --           luasnip = true,
-        --           -- optionally enable more: lsp, luasnip, etc.
-        --         },
-        --       })
-        --     end
-        -- },
-
         {
-            'MoaidHathot/dotnet.nvim',
-            config = function()
-                require("dotnet").setup({})
-            end
-        },
+            'mfussenegger/nvim-dap-python',
+            dependencies = {
+                'mfussenegger/nvim-dap',
+                'rcarriga/nvim-dap-ui',
+                'nvim-neotest/nvim-nio'
+            },
+            build = false,
+        }
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
     install = { colorscheme = { "everforest" } },
     -- automatically check for plugin updates
-    checker = { enabled = true },
+    checker = {
+        enabled = true,
+        frequency = 86400
+    }
 })
