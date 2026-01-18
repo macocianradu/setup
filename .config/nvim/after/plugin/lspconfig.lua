@@ -1,56 +1,34 @@
-local lspconfig = require('lspconfig')
-
-local project_library_path = vim.fn.getcwd() .. '/node_modules'
-local angular_cmd = {
-    'ngserver',
-    '--stdio',
-    '--tsProbeLocations',
-    project_library_path,
-    '--ngProbeLocations',
-    project_library_path .. '@angular/language-server'
-}
-
-lspconfig.ts_ls.setup {}
-lspconfig.angularls.setup({
-    cmd = angular_cmd,
-    on_new_config = function(new_config, new_root_dir)
-        new_config.cmd = angular_cmd
-    end
-})
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-lspconfig.cssls.setup {
-    capabilities = capabilities,
-}
-lspconfig.lua_ls.setup {}
-vim.lsp.config('roslyn', {
-    settings = {
-        ["csharp|inlay_hints"] = {
-            csharp_enable_inlay_hints_for_implicit_object_creation = true,
-            csharp_enable_inlay_hints_for_implicit_variable_types = true,
-            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-            csharp_enable_inlay_hints_for_types = true,
-            dotnet_enable_inlay_hints_for_indexer_parameters = true,
-            dotnet_enable_inlay_hints_for_literal_parameters = true,
-            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-            dotnet_enable_inlay_hints_for_other_parameters = true,
-            dotnet_enable_inlay_hints_for_parameters = true,
-            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
-        },
-    },
+
+vim.lsp.config("*", {
+    capabilities = capabilities
+})
+-- vim.lsp.config("ts_ls", {})
+vim.lsp.config("ruff", {})
+vim.lsp.config("cssls", {})
+vim.lsp.config("lua_ls", {})
+vim.lsp.config("odoo_ls", {
+    cmd = {
+        vim.fn.expand('$HOME/.local/share/nvim/odoo/odoo_ls_server'),
+        '--config-path', vim.fn.expand('$HOME/projects/odoo/odools.toml'),
+    }
+})
+vim.lsp.config("lemminx", {})
+vim.lsp.config("eslint", {
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  root_markers = { ".eslintrc", ".eslintrc.json", ".eslintrc.js", "package.json", ".git" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+  settings = {
+    validate = "on",
+    packageManager = "npm",
+    workingDirectory = { mode = "auto" },
+    debug = true,
+    format = true,
+  },
 })
 
-require('roslyn').setup({
-    exe = {
-        "dotnet",
-        vim.fs.joinpath(vim.fn.stdpath("data"), "roslyn", "Microsoft.CodeAnalysis.LanguageServer.dll"),
-    },
-    filewatching = true,
-})
-
+vim.lsp.enable({"odoo_ls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
@@ -103,4 +81,13 @@ cmp.setup({
     },
 })
 
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "xml",
+    callback = function()
+        vim.bo.indentexpr = ""
+        vim.bo.cindent = false
+        vim.bo.smartindent = false
+    end
+})
+
+-- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
