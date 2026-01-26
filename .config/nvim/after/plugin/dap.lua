@@ -29,6 +29,31 @@ dap.adapters['pwa-chrome'] = {
     }
 }
 
+local function is_odoo_project()
+    local cwd = vim.fn.getcwd()
+    return vim.fn.filereadable(cwd .. "/odoo-bin") == 1 or
+        vim.fn.filereadable(cwd .. "/odoo/odoo-bin") == 1
+end
+
+local function debug_odoo()
+    local db_name = vim.fn.input('Odoo DB: ', 'master')
+    if db_name == "" then return end
+
+    dap.run({
+        type = "python",
+        request = "launch",
+        name = "Odoo Server",
+        program = "/home/admac/projects/odoo/odoo/odoo-bin",
+        pythonPath = "/home/admac/projects/odoo/venv/bin/python3",
+        args = {
+            "--addons-path", "/home/admac/projects/odoo/enterprise/,/home/admac/projects/odoo/odoo/addons/",
+            "--dev", "all",
+            "-d", db_name
+        },
+        console = "externalTerminal",
+    })
+end
+
 local function run_odoo_test_at_cursor()
     -- Safely get the node at cursor
     local status, node = pcall(vim.treesitter.get_node)
@@ -95,6 +120,13 @@ local function run_odoo_test_at_cursor()
     })
 end
 
+vim.keymap.set("n", "<leader>d5", function()
+    if is_odoo_project() then
+        debug_odoo()
+    else
+        dap.continue()
+    end
+end)
 vim.keymap.set("n", "<leader>5", function() dap.continue() end)
 vim.keymap.set("n", "<leader>6", function() dap.step_over() end)
 vim.keymap.set("n", "<leader>+", function() dap.step_into() end)

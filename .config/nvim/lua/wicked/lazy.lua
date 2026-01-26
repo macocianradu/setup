@@ -30,7 +30,11 @@ require("lazy").setup({
         },
         'odoo/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
-        'theprimeagen/harpoon',
+        {
+            'theprimeagen/harpoon',
+            branch = 'harpoon2',
+            dependencies = { 'nvim-lua/plenary.nvim' }
+        },
         'petertriho/nvim-scrollbar',
         'mbbill/undotree',
         {
