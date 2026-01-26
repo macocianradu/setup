@@ -33,6 +33,29 @@ require("lazy").setup({
         'theprimeagen/harpoon',
         'petertriho/nvim-scrollbar',
         'mbbill/undotree',
+        {
+            "MeanderingProgrammer/render-markdown.nvim",
+            ft = { "markdown", "codecompanion" }
+        },
+        {
+            "OXY2DEV/markview.nvim",
+            lazy = false,
+            opts = {
+                preview = {
+                    filetypes = { "markdown", "codecompanion" },
+                    ignore_buftypes = {},
+                },
+            },
+        },
+        {
+            "olimorris/codecompanion.nvim",
+            version = "^18.0.0",
+            opts = {},
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+                "nvim-treesitter/nvim-treesitter",
+            },
+        },
         'tpope/vim-surround',
         'nvim-telescope/telescope-ui-select.nvim',
         'sphamba/smear-cursor.nvim',
@@ -55,7 +78,7 @@ require("lazy").setup({
         'hrsh7th/cmp-nvim-lsp',
         {
             'stevearc/oil.nvim',
-            dependencies = {{ "nvim-mini/mini.icons" }}
+            dependencies = { { "nvim-mini/mini.icons" } }
         },
         'hrsh7th/cmp-buffer',
         'hrsh7th/nvim-cmp',
