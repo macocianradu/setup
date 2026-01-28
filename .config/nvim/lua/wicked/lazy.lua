@@ -63,6 +63,13 @@ require("lazy").setup({
         'tpope/vim-surround',
         'nvim-telescope/telescope-ui-select.nvim',
         'sphamba/smear-cursor.nvim',
+        {
+            "folke/persistence.nvim",
+            event = "BufReadPre",
+            opts = {
+                dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/")
+            }
+        },
         'williamboman/mason.nvim',
         'lewis6991/gitsigns.nvim',
         'tpope/vim-projectionist',
