@@ -8,6 +8,7 @@ vim.lsp.config("*", {
 vim.lsp.config("ruff", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
+vim.lsp.config("roslyn", {})
 vim.lsp.config("odoo_ls", {
     cmd = {
         vim.fn.expand('$HOME/.local/share/nvim/odoo/odoo_ls_server'),

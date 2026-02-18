@@ -61,6 +61,7 @@ require("lazy").setup({
             },
         },
         'tpope/vim-surround',
+        'seblyng/roslyn.nvim',
         'nvim-telescope/telescope-ui-select.nvim',
         'sphamba/smear-cursor.nvim',
         {
