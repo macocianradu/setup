@@ -101,6 +101,16 @@ require("lazy").setup({
             'stevearc/oil.nvim',
             dependencies = { { "nvim-mini/mini.icons" } }
         },
+        {
+            "linrongbin16/gitlinker.nvim",
+            cmd = "GitLink",
+            opts = {},
+            keys = {
+              { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git link" },
+              { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git link" },
+              { "<leader>gB", "<cmd>GitLink! blame<cr>", mode = { "n", "v" }, desc = "Open git blame link" },
+            },
+        },
         'hrsh7th/cmp-buffer',
         'hrsh7th/nvim-cmp',
         'L3MON4D3/LuaSnip',
