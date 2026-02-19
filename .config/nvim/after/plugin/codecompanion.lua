@@ -15,12 +15,23 @@ require('codecompanion').setup({
                     }
                 })
             end,
+        },
+        acp = {
+            codex = function()
+                return require("codecompanion.adapters").extend("codex", {
+                    defaults = {
+                        auth_method = "chatgpt"
+                    },
+                })
+            end
         }
     },
     interactions = {
         chat = {
-            adapter = "webui",
-            model = "deepseek-coder:6.7b"
+            adapter = "codex",
+            model = "gpt-5"
         },
     }
 })
+
+vim.keymap.set('n', '<leader>gpt', function(opts) require("codecompanion").chat(opts) end);
