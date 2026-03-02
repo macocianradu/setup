@@ -42,16 +42,6 @@ require("lazy").setup({
             ft = { "markdown", "codecompanion" }
         },
         {
-            "OXY2DEV/markview.nvim",
-            lazy = false,
-            opts = {
-                preview = {
-                    filetypes = { "markdown", "codecompanion" },
-                    ignore_buftypes = {},
-                },
-            },
-        },
-        {
             "olimorris/codecompanion.nvim",
             version = "^18.0.0",
             opts = {},
@@ -59,6 +49,15 @@ require("lazy").setup({
                 "nvim-lua/plenary.nvim",
                 "nvim-treesitter/nvim-treesitter",
             },
+        },
+        {
+            name = "nvim-http",
+            dir = "~/Projects/nvim-http",
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope.nvim",
+            },
+            build = "rockspec",
         },
         'tpope/vim-surround',
         'seblyng/roslyn.nvim',
@@ -129,6 +128,9 @@ require("lazy").setup({
     -- colorscheme that will be used when installing plugins.
     install = { colorscheme = { "everforest" } },
     -- automatically check for plugin updates
+    rocks = {
+        hererocks = true
+    },
     checker = {
         enabled = true,
         frequency = 86400

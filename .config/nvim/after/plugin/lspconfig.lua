@@ -8,6 +8,7 @@ vim.lsp.config("*", {
 vim.lsp.config("ruff", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
+vim.lsp.config("hls", {})
 vim.lsp.config("roslyn", {})
 vim.lsp.config("odoo_ls", {
     cmd = {
@@ -29,7 +30,7 @@ vim.lsp.config("eslint", {
   },
 })
 
-vim.lsp.enable({"odoo_ls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
+vim.lsp.enable({"odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
@@ -43,14 +44,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>gi', function() vim.lsp.buf.implementation() end, opts)
         vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev() end, opts)
-        vim.keymap.set('n', '<leader>vca', function()
-            vim.lsp.buf.code_action({
-                context = {
-                    diagnostics = vim.diagnostic.get(0),
-                    only = { 'quickfix', 'refactor', 'source' }
-                }
-            })
-        end, opts)
+        vim.keymap.set('n', '<leader>vca', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', '<leader>vrr', function() vim.lsp.buf.references() end, opts)
         vim.keymap.set('n', '<leader>vrn', function() vim.lsp.buf.rename() end, opts)
         vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
