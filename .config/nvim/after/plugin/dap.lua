@@ -9,6 +9,7 @@ dap.listeners.after.event_exited["dapui_config"] = function() dapui.close() end
 
 local dotnet = require("dap.dap-dotnet")
 local odoo = require("dap.dap-odoo")
+local haskell = require("dap.dap-haskell")
 
 
 vim.keymap.set("n", "<leader>5", function()
