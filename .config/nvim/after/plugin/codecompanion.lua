@@ -29,7 +29,38 @@ require('codecompanion').setup({
     interactions = {
         chat = {
             adapter = "codex",
-            model = "gpt-5"
+            model = "gpt-5",
+
+            keymaps = {
+                yolo_mode = false,
+            },
+
+            tools = {
+                ["insert_edit_into_file"] = {
+                    opts = {
+                        require_approval_before = {
+                            buffer = true, -- ask before editing current buffer
+                            file = true, -- ask before editing files
+                        },
+                        require_confirmation_after = true,
+                        allowed_in_yolo_mode = false,
+                    },
+                },
+                ["create_file"] = {
+                    opts = {
+                        require_approval_before = true,
+                        require_cmd_approval = true,
+                        allowed_in_yolo_mode = false,
+                    },
+                },
+                ["delete_file"] = {
+                    opts = {
+                        require_approval_before = true,
+                        require_cmd_approval = true,
+                        allowed_in_yolo_mode = false,
+                    },
+                },
+            },
         },
     }
 })

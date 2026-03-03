@@ -1,6 +1,7 @@
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local conf = require("telescope.config").values
+local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
@@ -36,7 +37,7 @@ local function hoogle_picker(query)
         return
     end
 
-    local cmd = { "hoogle", "--count=200" }
+    local cmd = { "hoogle", "--count=200", "--json" }
     if mode == "text" then
         table.insert(cmd, "--text")
     end
@@ -48,17 +49,73 @@ local function hoogle_picker(query)
         return
     end
 
+    local decoded = nil
+    local ok, parsed = pcall(vim.json.decode, table.concat(lines, "\n"))
+    if ok and type(parsed) == "table" then
+        decoded = parsed
+    else
+        vim.notify("hoogle returned unexpected output", vim.log.levels.ERROR)
+        return
+    end
+
     local results = {}
-    for _, line in ipairs(lines) do
-        if line ~= "" and not line:match("^%d+ results found") then
-            table.insert(results, line)
+    for _, entry in ipairs(decoded) do
+        local signature = entry.item or ""
+        local docs = entry.docs or ""
+        local url = entry.url
+        local docs_one_line = vim.trim((docs:gsub("%s+", " ")))
+
+        if #docs_one_line > 140 then
+            docs_one_line = docs_one_line:sub(1, 137) .. "..."
         end
+
+        local display = signature
+        if docs_one_line ~= "" then
+            display = display .. " - " .. docs_one_line
+        end
+
+        table.insert(results, {
+            signature = signature,
+            docs = docs,
+            url = url,
+            display = display,
+        })
     end
 
     pickers.new({}, {
         prompt_title = ("Hoogle (%s): %s"):format(mode, normalized_query),
-        finder = finders.new_table({ results = results, }),
+        finder = finders.new_table({
+            results = results,
+            entry_maker = function(entry)
+                return {
+                    value = entry,
+                    display = entry.display,
+                    ordinal = entry.signature .. " " .. (entry.docs or ""),
+                }
+            end,
+        }),
         sorter = conf.generic_sorter({}),
+        previewer = previewers.new_buffer_previewer({
+            define_preview = function(self, entry)
+                local value = entry.value or {}
+                local preview_lines = { value.signature or "" }
+
+                if value.docs and value.docs ~= "" then
+                    table.insert(preview_lines, "")
+                    vim.list_extend(preview_lines, vim.split(value.docs, "\n", { plain = true }))
+                else
+                    table.insert(preview_lines, "")
+                    table.insert(preview_lines, "No documentation available.")
+                end
+
+                if value.url and value.url ~= "" then
+                    table.insert(preview_lines, "")
+                    table.insert(preview_lines, value.url)
+                end
+
+                vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, preview_lines)
+            end,
+        }),
         attach_mappings = function(prompt_bufnr, map)
             local function open_result()
                 local selection = action_state.get_selected_entry()
