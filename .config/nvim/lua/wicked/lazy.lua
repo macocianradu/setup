@@ -28,6 +28,9 @@ require("lazy").setup({
                 vim.cmd('colorscheme everforest')
             end
         },
+        {
+            'shaunsingh/nord.nvim'
+        },
         'odoo/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
         {
@@ -71,6 +74,22 @@ require("lazy").setup({
             }
         },
         'williamboman/mason.nvim',
+        {
+            'obsidian-nvim/obsidian.nvim',
+            ft = "markdown",
+            --- @module 'obsidian'
+            --- @type obsidian.config
+            opts = {
+                legacy_commands = false,
+                workspaces = {
+                    {
+                        name = "personal",
+                        path = "~/notes",
+                    }
+                }
+            }
+        },
+        "folke/snacks.nvim",
         'lewis6991/gitsigns.nvim',
         'tpope/vim-projectionist',
         'williamboman/mason-lspconfig.nvim',

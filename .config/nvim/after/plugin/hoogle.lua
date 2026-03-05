@@ -5,6 +5,27 @@ local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
+local STOP_WORDS = {
+    ["a"] = true,
+    ["an"] = true,
+    ["and"] = true,
+    ["as"] = true,
+    ["at"] = true,
+    ["by"] = true,
+    ["for"] = true,
+    ["from"] = true,
+    ["in"] = true,
+    ["into"] = true,
+    ["is"] = true,
+    ["of"] = true,
+    ["on"] = true,
+    ["or"] = true,
+    ["that"] = true,
+    ["the"] = true,
+    ["to"] = true,
+    ["with"] = true,
+}
+
 local function parse_query_mode(raw_query)
     local query = vim.trim(raw_query or "")
     if query:match("^text:%s*") then
@@ -26,6 +47,106 @@ local function parse_query_mode(raw_query)
     return looks_like_type and "type" or "text", query
 end
 
+local function run_hoogle_query(query, count)
+    local cmd = { "hoogle", ("--count=%d"):format(count or 200), "--json", query }
+    local lines = vim.fn.systemlist(cmd)
+    if vim.v.shell_error ~= 0 then
+        return nil, "hoogle failed:\n" .. table.concat(lines, "\n")
+    end
+
+    local ok, parsed = pcall(vim.json.decode, table.concat(lines, "\n"))
+    if not ok or type(parsed) ~= "table" then
+        return nil, "hoogle returned unexpected output"
+    end
+
+    return parsed, nil
+end
+
+local function normalize_docs(docs)
+    return vim.trim((docs or ""):gsub("<.->", " "):gsub("%s+", " "):lower())
+end
+
+local function tokenize_text_query(query)
+    local tokens = {}
+    local seen = {}
+    for token in query:lower():gmatch("[%w_]+") do
+        if #token >= 3 and not STOP_WORDS[token] and not seen[token] then
+            seen[token] = true
+            table.insert(tokens, token)
+        end
+    end
+    return tokens
+end
+
+local function hoogle_text_search(query)
+    local tokens = tokenize_text_query(query)
+    if #tokens == 0 then
+        tokens = { query:lower() }
+    end
+
+    local ranked = {}
+    local order = {}
+
+    local function bump(entry, token, base_score)
+        local key = entry.url or entry.item or (entry.module and entry.module.name) or vim.inspect(entry)
+        local slot = ranked[key]
+        if not slot then
+            slot = { entry = entry, score = 0 }
+            ranked[key] = slot
+            table.insert(order, key)
+        end
+
+        local signature = (entry.item or ""):lower()
+        local docs = normalize_docs(entry.docs)
+        if signature:find(token, 1, true) then
+            slot.score = slot.score + base_score + 2
+        end
+        if docs:find(token, 1, true) then
+            slot.score = slot.score + base_score
+        end
+    end
+
+    local exact, err = run_hoogle_query(query, 200)
+    if exact then
+        for _, entry in ipairs(exact) do
+            bump(entry, query:lower(), 8)
+        end
+    end
+
+    for i = 1, math.min(#tokens, 6) do
+        local token = tokens[i]
+        local partial, partial_err = run_hoogle_query(token, 120)
+        if partial then
+            for _, entry in ipairs(partial) do
+                bump(entry, token, 3)
+            end
+        elseif not err then
+            err = partial_err
+        end
+    end
+
+    local items = {}
+    for _, key in ipairs(order) do
+        local slot = ranked[key]
+        if slot and slot.score > 0 then
+            table.insert(items, slot)
+        end
+    end
+    table.sort(items, function(a, b)
+        return a.score > b.score
+    end)
+
+    local out = {}
+    for _, slot in ipairs(items) do
+        table.insert(out, slot.entry)
+    end
+
+    if #out == 0 and err then
+        return nil, err
+    end
+    return out, nil
+end
+
 local function hoogle_picker(query)
     if vim.fn.executable("hoogle") ~= 1 then
         vim.notify("hoogle not found in PATH", vim.log.levels.ERROR)
@@ -37,24 +158,14 @@ local function hoogle_picker(query)
         return
     end
 
-    local cmd = { "hoogle", "--count=200", "--json" }
+    local decoded, err
     if mode == "text" then
-        table.insert(cmd, "--text")
-    end
-    table.insert(cmd, normalized_query)
-
-    local lines = vim.fn.systemlist(cmd)
-    if vim.v.shell_error ~= 0 then
-        vim.notify("hoogle failed:\n" .. table.concat(lines, "\n"), vim.log.levels.ERROR)
-        return
-    end
-
-    local decoded = nil
-    local ok, parsed = pcall(vim.json.decode, table.concat(lines, "\n"))
-    if ok and type(parsed) == "table" then
-        decoded = parsed
+        decoded, err = hoogle_text_search(normalized_query)
     else
-        vim.notify("hoogle returned unexpected output", vim.log.levels.ERROR)
+        decoded, err = run_hoogle_query(normalized_query, 200)
+    end
+    if not decoded then
+        vim.notify(err or "hoogle failed", vim.log.levels.ERROR)
         return
     end
 
