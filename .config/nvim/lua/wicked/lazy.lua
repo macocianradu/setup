@@ -51,16 +51,8 @@ require("lazy").setup({
             dependencies = {
                 "nvim-lua/plenary.nvim",
                 "nvim-treesitter/nvim-treesitter",
+                "ravitemer/codecompanion-history.nvim",
             },
-        },
-        {
-            name = "nvim-http",
-            dir = "~/Projects/nvim-http",
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-                "nvim-telescope/telescope.nvim",
-            },
-            build = "rockspec",
         },
         'tpope/vim-surround',
         'seblyng/roslyn.nvim',
@@ -81,6 +73,9 @@ require("lazy").setup({
             --- @type obsidian.config
             opts = {
                 legacy_commands = false,
+                ui = {
+                    enable = false,
+                },
                 workspaces = {
                     {
                         name = "personal",
