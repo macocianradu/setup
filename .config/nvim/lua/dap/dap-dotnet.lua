@@ -5,7 +5,7 @@ local M = {}
 -- Adapter (netcoredbg)
 dap.adapters.coreclr = {
     type = "executable",
-    command = "/Users/radumaco/Projects/netcoredbg/build/src/netcoredbg",
+    command = "/home/radu/.local/share/nvim/mason/bin/netcoredbg",
     args = { "--interpreter=vscode" },
 }
 
@@ -200,6 +200,7 @@ local function debug_dotnet_from_sln()
         env = {
             ASPNETCORE_ENVIRONMENT = "Development",
             DOTNET_ENVIRONMENT = "Development",
+            ASPNETCORE_URLS = "https://localhost:7045;http://localhost:5000",
         },
     })
 end

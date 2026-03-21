@@ -4,7 +4,24 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.config("*", {
     capabilities = capabilities
 })
--- vim.lsp.config("ts_ls", {})
+
+local project_library_path = vim.fn.getcwd() .. '/node_modules'
+local angular_cmd = {
+    'ngserver',
+    '--stdio',
+    '--tsProbeLocations',
+    project_library_path,
+    '--ngProbeLocations',
+    project_library_path .. '@angular/language-server'
+}
+
+vim.lsp.config("ts_ls", {})
+vim.lsp.config("angularls", {
+    cmd = angular_cmd,
+    on_new_config = function(new_config, new_root_dir)
+        new_config.cmd = angular_cmd
+    end
+})
 vim.lsp.config("ruff", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
@@ -30,7 +47,7 @@ vim.lsp.config("eslint", {
   },
 })
 
-vim.lsp.enable({"odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
+vim.lsp.enable({"angularls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
