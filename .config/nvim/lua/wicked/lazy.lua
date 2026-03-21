@@ -76,7 +76,11 @@ require("lazy").setup({
         {
             "olimorris/codecompanion.nvim",
             version = "^18.0.0",
-            opts = {},
+            opts = {
+                opts = {
+                    log_level = "TRACE",
+                },
+            },
             dependencies = {
                 "nvim-lua/plenary.nvim",
                 "nvim-treesitter/nvim-treesitter",
