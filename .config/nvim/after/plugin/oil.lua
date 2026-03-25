@@ -11,7 +11,6 @@ require("oil").setup({
     },
     keymaps = {
         ["q"] = "actions.close",
-        ["<Esc>"] = "actions.close",
     },
     view_options = {
         show_hidden = true

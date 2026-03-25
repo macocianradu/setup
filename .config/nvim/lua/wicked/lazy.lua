@@ -31,6 +31,26 @@ require("lazy").setup({
         {
             'shaunsingh/nord.nvim'
         },
+        {
+            "thgrund/tidal.nvim",
+            opts = {
+                boot = {
+                    tidal = {
+                        cmd = "/usr/bin/ghci",
+                        file = "/usr/share/haskell-tidal/BootTidal.hs",
+                        highlight = {
+                            autostart = true,
+                        },
+                    },
+                    sclang = { enabled = true },
+                },
+            },
+            -- Recommended: Install TreeSitter parsers for Haskell and SuperCollider
+            dependencies = {
+                "nvim-treesitter/nvim-treesitter",
+                opts = { ensure_installed = { "haskell", "supercollider" } },
+            },
+        },
         'odoo/odoo-neovim',
         'nvim-treesitter/nvim-treesitter',
         {
@@ -55,7 +75,6 @@ require("lazy").setup({
             },
         },
         'tpope/vim-surround',
-        'seblyng/roslyn.nvim',
         'nvim-telescope/telescope-ui-select.nvim',
         'sphamba/smear-cursor.nvim',
         {
@@ -120,9 +139,9 @@ require("lazy").setup({
             cmd = "GitLink",
             opts = {},
             keys = {
-              { "<leader>gy", "<cmd>GitLink<cr>", mode = { "n", "v" }, desc = "Yank git link" },
-              { "<leader>gY", "<cmd>GitLink!<cr>", mode = { "n", "v" }, desc = "Open git link" },
-              { "<leader>gB", "<cmd>GitLink! blame<cr>", mode = { "n", "v" }, desc = "Open git blame link" },
+                { "<leader>gy", "<cmd>GitLink<cr>",        mode = { "n", "v" }, desc = "Yank git link" },
+                { "<leader>gY", "<cmd>GitLink!<cr>",       mode = { "n", "v" }, desc = "Open git link" },
+                { "<leader>gB", "<cmd>GitLink! blame<cr>", mode = { "n", "v" }, desc = "Open git blame link" },
             },
         },
         'hrsh7th/cmp-buffer',
