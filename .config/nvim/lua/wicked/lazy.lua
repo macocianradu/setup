@@ -36,13 +36,15 @@ require("lazy").setup({
             opts = {
                 boot = {
                     tidal = {
-                        cmd = "/usr/bin/ghci",
-                        file = "/usr/share/haskell-tidal/BootTidal.hs",
+                        cmd = os.getenv("HOME") .. "/.ghcup/bin/ghci",
                         highlight = {
                             autostart = true,
                         },
                     },
-                    sclang = { enabled = true },
+                    sclang = {
+                        enabled = true ,
+                        file = os.getenv("HOME") .. "/.local/share/tidal/BootSuperDirt.scd",
+                    },
                 },
             },
             -- Recommended: Install TreeSitter parsers for Haskell and SuperCollider
