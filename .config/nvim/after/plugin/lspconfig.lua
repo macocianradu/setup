@@ -26,7 +26,6 @@ vim.lsp.config("ruff", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
 vim.lsp.config("hls", {})
-vim.lsp.config("roslyn", {})
 vim.lsp.config("odoo_ls", {
     cmd = {
         vim.fn.expand('$HOME/.local/share/nvim/odoo/odoo_ls_server'),
@@ -35,19 +34,19 @@ vim.lsp.config("odoo_ls", {
 })
 vim.lsp.config("lemminx", {})
 vim.lsp.config("eslint", {
-  cmd = { "vscode-eslint-language-server", "--stdio" },
-  root_markers = { ".eslintrc", ".eslintrc.json", ".eslintrc.js", "package.json", ".git" },
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
-  settings = {
-    validate = "on",
-    packageManager = "npm",
-    workingDirectory = { mode = "auto" },
-    debug = true,
-    format = true,
-  },
+    cmd = { "vscode-eslint-language-server", "--stdio" },
+    root_markers = { ".eslintrc", ".eslintrc.json", ".eslintrc.js", "package.json", ".git" },
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+    settings = {
+        validate = "on",
+        packageManager = "npm",
+        workingDirectory = { mode = "auto" },
+        debug = true,
+        format = true,
+    },
 })
 
-vim.lsp.enable({"angularls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx"})
+vim.lsp.enable({ "angularls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx" })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),

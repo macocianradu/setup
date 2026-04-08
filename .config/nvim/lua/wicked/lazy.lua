@@ -159,6 +159,7 @@ require("lazy").setup({
         },
         'hrsh7th/cmp-buffer',
         'hrsh7th/nvim-cmp',
+        'seblyng/roslyn.nvim',
         'L3MON4D3/LuaSnip',
         {
             'mfussenegger/nvim-dap-python',
