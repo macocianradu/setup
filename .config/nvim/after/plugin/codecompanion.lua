@@ -1,7 +1,19 @@
 require('codecompanion').setup({
     extensions = {
         history = {
-            enabled= true,
+            enabled = true,
+            opts = {
+                title_generation_opts = {
+                    adapter = "openrouter",
+                    model = "minimax/minimax-m2.5"
+                }
+            },
+            summary = {
+                generation_opts = {
+                    adapter = "openrouter",
+                    model = "minimax/minimax-m2.5"
+                }
+            }
         },
     },
     adapters = {
@@ -15,23 +27,40 @@ require('codecompanion').setup({
                     },
                     schema = {
                         model = {
-                            default = "qwen3.5:9b", -- Use the exact model name from your PC
+                            default = "qwen3.5:9b",
                         }
                     }
+                })
+            end,
+            openrouter = function()
+                return require("codecompanion.adapters").extend("openai_compatible", {
+                    env = {
+                        url = "https://openrouter.ai/api",
+                        api_key = os.getenv("OPENROUTER_API_KEY"),
+                        chat_url = "/v1/chat/completions",
+                    },
+                    schema = {
+                        model = {
+                            default = "qwen/qwen3.5-plus-02-15",
+                        },
+                    },
                 })
             end,
         },
         acp = {
             claude_code = function()
-                return require("codecompanion.adapters").extend("claude_code", { })
+                return require("codecompanion.adapters").extend("claude_code", {})
             end
         }
     },
     interactions = {
         chat = {
-            adapter = "claude_code",
+            adapter = "opencode",
+        },
+        inline = {
+            adapter = "openrouter",
         }
     }
 })
 
-vim.keymap.set('n', '<leader>gpt', function() require("codecompanion").chat({strategy = "agent" }) end);
+vim.keymap.set('n', '<leader>gpt', function() require("codecompanion").chat({ strategy = "agent" }) end);
