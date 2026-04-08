@@ -32,6 +32,13 @@ require("lazy").setup({
             'shaunsingh/nord.nvim'
         },
         {
+            "gruvw/strudel.nvim",
+            build = "npm ci",
+            config = function()
+                require("strudel").setup()
+            end,
+        },
+        {
             "thgrund/tidal.nvim",
             opts = {
                 boot = {
@@ -42,7 +49,7 @@ require("lazy").setup({
                         },
                     },
                     sclang = {
-                        enabled = true ,
+                        enabled = true,
                         file = os.getenv("HOME") .. "/.local/share/tidal/BootSuperDirt.scd",
                     },
                 },
