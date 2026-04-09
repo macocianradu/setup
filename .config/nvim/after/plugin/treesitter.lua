@@ -1,51 +1,42 @@
-require 'nvim-treesitter.config'.setup {
-    -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-    ensure_installed = {
-        "vimdoc",
-        "javascript",
-        "typescript",
-        "c_sharp",
-        "c",
-        "lua",
-        "vim",
-        "vimdoc",
-        "query",
-        "markdown",
-        "markdown_inline",
-        "yaml"
-    },
+local ts = require('nvim-treesitter')
 
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
+ts.setup{}
 
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
+ts.install({
+    "vimdoc",
+    "javascript",
+    "typescript",
+    "c_sharp",
+    "c",
+    "lua",
+    "vim",
+    "vimdoc",
+    "query",
+    "markdown",
+    "markdown_inline",
+    "yaml",
+    "haskell"
+})
 
-    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+vim.api.nvim_create_autocmd('FileType', {
+    callback = function(ev)
+        local lang = vim.treesitter.language.get_lang(ev.match)
+        local available_langs = ts.get_available()
+        local is_available = vim.tbl_contains(available_langs, lang)
+        if is_available then
+            local installed_langs = ts.get_installed()
+            local installed = vim.tbl_contains(installed_langs, lang)
+            if not installed then
+                ts.install(lang):await()
+            end
+            vim.treesitter.start()
+            ts.indentexpr()
+        end
+        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo[0][0].foldmethod = 'expr'
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+})
 
-    highlight = {
-        enable = true,
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-
-    indent = {
-        enable = true,
-        disable = { "xml", "python" },
-    },
-
-    fold = {
-        enable = true,
-    },
-}
-
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 99
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99

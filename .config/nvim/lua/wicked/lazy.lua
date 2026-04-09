@@ -61,7 +61,11 @@ require("lazy").setup({
             },
         },
         'odoo/odoo-neovim',
-        'nvim-treesitter/nvim-treesitter',
+        {
+            'nvim-treesitter/nvim-treesitter',
+            lazy = false,
+            build = ':TSUpdate'
+        },
         {
             'theprimeagen/harpoon',
             branch = 'harpoon2',
