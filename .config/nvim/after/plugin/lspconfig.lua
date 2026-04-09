@@ -32,6 +32,9 @@ vim.lsp.config("odoo_ls", {
         '--config-path', vim.fn.expand('$HOME/projects/odoo/odools.toml'),
     }
 })
+vim.lsp.config("qmlls", {
+    cmd = { "qmlls6", "-E" }
+})
 vim.lsp.config("lemminx", {})
 vim.lsp.config("eslint", {
     cmd = { "vscode-eslint-language-server", "--stdio" },
@@ -46,7 +49,7 @@ vim.lsp.config("eslint", {
     },
 })
 
-vim.lsp.enable({ "angularls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx" })
+vim.lsp.enable({ "angularls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls" })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
