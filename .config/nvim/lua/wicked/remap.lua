@@ -3,8 +3,6 @@ vim.keymap.set("n", "<leader>pv", function ()
     require("oil").toggle_float()
 end)
 
-vim.keymap.set("n", "<leader>u", ":UndotreeShow<CR>")
-
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 

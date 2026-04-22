@@ -48,4 +48,5 @@ require('gitsigns').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>gb', ':Gitsigns blame_line<CR>', { desc = '[G]it [B]lame' })
+vim.keymap.set('n', '<leader>gb', ':Gitsigns blame_line<CR>', { desc = '[G]it [B]lame line' })
+vim.keymap.set('n', '<leader>gB', ':Gitsigns blame<CR>', { desc = '[G]it [B]lame' })
