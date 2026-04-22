@@ -1,10 +1,3 @@
-local pickers = require("telescope.pickers")
-local finders = require("telescope.finders")
-local conf = require("telescope.config").values
-local previewers = require("telescope.previewers")
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-
 local STOP_WORDS = {
     ["a"] = true,
     ["an"] = true,
@@ -35,9 +28,6 @@ local function parse_query_mode(raw_query)
         return "type", vim.trim((query:gsub("^type:%s*", "", 1)))
     end
 
-    -- Heuristic:
-    --  - Queries that look like signatures/operators stay in type mode.
-    --  - Everything else defaults to text mode so plain-language search works.
     local looks_like_type = query:match("::")
         or query:match("->")
         or query:match("=>")
@@ -169,8 +159,8 @@ local function hoogle_picker(query)
         return
     end
 
-    local results = {}
-    for _, entry in ipairs(decoded) do
+    local items = {}
+    for idx, entry in ipairs(decoded) do
         local signature = entry.item or ""
         local docs = entry.docs or ""
         local url = entry.url
@@ -185,7 +175,9 @@ local function hoogle_picker(query)
             display = display .. " - " .. docs_one_line
         end
 
-        table.insert(results, {
+        table.insert(items, {
+            idx = idx,
+            text = signature .. " " .. (docs or ""),
             signature = signature,
             docs = docs,
             url = url,
@@ -193,54 +185,36 @@ local function hoogle_picker(query)
         })
     end
 
-    pickers.new({}, {
-        prompt_title = ("Hoogle (%s): %s"):format(mode, normalized_query),
-        finder = finders.new_table({
-            results = results,
-            entry_maker = function(entry)
-                return {
-                    value = entry,
-                    display = entry.display,
-                    ordinal = entry.signature .. " " .. (entry.docs or ""),
-                }
-            end,
-        }),
-        sorter = conf.generic_sorter({}),
-        previewer = previewers.new_buffer_previewer({
-            define_preview = function(self, entry)
-                local value = entry.value or {}
-                local preview_lines = { value.signature or "" }
-
-                if value.docs and value.docs ~= "" then
-                    table.insert(preview_lines, "")
-                    vim.list_extend(preview_lines, vim.split(value.docs, "\n", { plain = true }))
-                else
-                    table.insert(preview_lines, "")
-                    table.insert(preview_lines, "No documentation available.")
-                end
-
-                if value.url and value.url ~= "" then
-                    table.insert(preview_lines, "")
-                    table.insert(preview_lines, value.url)
-                end
-
-                vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, preview_lines)
-            end,
-        }),
-        attach_mappings = function(prompt_bufnr, map)
-            local function open_result()
-                local selection = action_state.get_selected_entry()
-                actions.close(prompt_bufnr)
-                if selection and selection.value and selection.value.url then
-                    vim.ui.open(selection.value.url)
-                end
-            end
-
-            map("i", "<CR>", open_result)
-            map("n", "<CR>", open_result)
-            return true
+    Snacks.picker.pick({
+        source = "hoogle",
+        title = ("Hoogle (%s): %s"):format(mode, normalized_query),
+        items = items,
+        format = function(item)
+            return { { item.display, "SnacksPickerLabel" } }
         end,
-    }):find()
+        preview = function(ctx)
+            local item = ctx.item
+            local lines = { item.signature or "" }
+            if item.docs and item.docs ~= "" then
+                table.insert(lines, "")
+                vim.list_extend(lines, vim.split(item.docs, "\n", { plain = true }))
+            else
+                table.insert(lines, "")
+                table.insert(lines, "No documentation available.")
+            end
+            if item.url and item.url ~= "" then
+                table.insert(lines, "")
+                table.insert(lines, item.url)
+            end
+            vim.api.nvim_buf_set_lines(ctx.buf, 0, -1, false, lines)
+        end,
+        confirm = function(picker, item)
+            picker:close()
+            if item and item.url then
+                vim.ui.open(item.url)
+            end
+        end,
+    })
 end
 
 vim.api.nvim_create_user_command("Hoogle", function(opts)
@@ -256,4 +230,3 @@ end, { desc = "Hoogle current word" })
 vim.keymap.set("n", "<leader>ht", function()
     vim.cmd("Hoogle " .. vim.fn.input("Hoogle type/text > "))
 end, { desc = "Hoogle query" })
-

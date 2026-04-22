@@ -19,10 +19,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     spec = {
         {
-            'nvim-telescope/telescope.nvim',
-            dependencies = { 'nvim-lua/plenary.nvim' }
-        },
-        {
             'neanias/everforest-nvim',
             config = function()
                 vim.cmd('colorscheme everforest')
@@ -92,7 +88,6 @@ require("lazy").setup({
             },
         },
         'tpope/vim-surround',
-        'nvim-telescope/telescope-ui-select.nvim',
         'sphamba/smear-cursor.nvim',
         {
             "folke/persistence.nvim",
@@ -123,23 +118,12 @@ require("lazy").setup({
         "folke/snacks.nvim",
         'lewis6991/gitsigns.nvim',
         'tpope/vim-projectionist',
-        'williamboman/mason-lspconfig.nvim',
         {
             "NeogitOrg/neogit",
             dependencies = {
                 "sindrets/diffview.nvim",
             },
             config = true
-        },
-        {
-            'nvimdev/dashboard-nvim',
-            event = 'VimEnter',
-            config = function()
-                require('dashboard').setup {
-                    -- config
-                }
-            end,
-            dependencies = { { 'nvim-tree/nvim-web-devicons' } }
         },
         'neovim/nvim-lspconfig',
         {
