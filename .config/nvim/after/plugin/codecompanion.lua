@@ -5,13 +5,13 @@ require('codecompanion').setup({
             opts = {
                 title_generation_opts = {
                     adapter = "openrouter",
-                    model = "minimax/minimax-m2.5"
+                    model = "minimax/minimax-m2.7"
                 }
             },
             summary = {
                 generation_opts = {
                     adapter = "openrouter",
-                    model = "minimax/minimax-m2.5"
+                    model = "minimax/minimax-m2.7"
                 }
             }
         },
@@ -41,7 +41,7 @@ require('codecompanion').setup({
                     },
                     schema = {
                         model = {
-                            default = "qwen/qwen3.5-plus-02-15",
+                            default = "qwen/qwen3.6-flash",
                         },
                     },
                 })
@@ -64,3 +64,19 @@ require('codecompanion').setup({
 })
 
 vim.keymap.set('n', '<leader>gpt', function() require("codecompanion").chat({ strategy = "agent" }) end);
+
+vim.keymap.set('n', 'gpi', function()
+  Snacks.input({ prompt = "Prompt: " }, function(input)
+    if input and input ~= "" then
+      vim.cmd("CodeCompanion " .. input)
+    end
+  end)
+end)
+
+vim.keymap.set('v', 'gpi', function()
+  Snacks.input({ prompt = "Prompt (with context): " }, function(input)
+    if input and input ~= "" then
+      vim.cmd("'<,'>CodeCompanion " .. input)
+    end
+  end)
+end)
