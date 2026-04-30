@@ -5,7 +5,7 @@ local M = {}
 -- Adapter (netcoredbg)
 dap.adapters.coreclr = {
     type = "executable",
-    command = "/home/radu/.local/share/nvim/mason/bin/netcoredbg",
+    command = vim.fn.expand("$HOME/.local/share/nvim/mason/bin/netcoredbg"),
     args = { "--interpreter=vscode" },
 }
 
