@@ -86,5 +86,9 @@ local function toggle_term(fullscreen)
     end
 end
 
-vim.keymap.set({ "n", "t" }, "<leader>tt", function() toggle_term(false) end, { desc = "Terminal (split)" })
-vim.keymap.set({ "n", "t" }, "<leader>tT", function() toggle_term(true) end, { desc = "Terminal (fullscreen)" })
+vim.keymap.set("n", "<leader>tt", function() toggle_term(false) end, { desc = "Terminal (split)" })
+vim.keymap.set("n", "<leader>tT", function() toggle_term(true) end, { desc = "Terminal (fullscreen)" })
+vim.keymap.set("t", "<C-t>", function()
+    local w = find_term_win()
+    if w then vim.api.nvim_win_close(w, true) end
+end, { desc = "Hide terminal" })
