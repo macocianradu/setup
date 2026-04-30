@@ -26,5 +26,12 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
+vim.opt.autoread = true
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+    callback = function()
+        vim.cmd("checktime")
+    end,
+})
 
 vim.g.mapleader = " "
