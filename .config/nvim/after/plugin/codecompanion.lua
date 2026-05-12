@@ -5,13 +5,13 @@ require('codecompanion').setup({
             opts = {
                 title_generation_opts = {
                     adapter = "openrouter",
-                    model = "minimax/minimax-m2.7"
+                    model = "qwen/qwen3.6-flash"
                 }
             },
             summary = {
                 generation_opts = {
                     adapter = "openrouter",
-                    model = "minimax/minimax-m2.7"
+                    model = "qwen/qwen3.6-flash"
                 }
             }
         },
