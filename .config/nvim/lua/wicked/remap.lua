@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", function ()
+vim.keymap.set("n", "<leader>pv", function()
     require("oil").toggle_float()
 end)
 
@@ -37,6 +37,18 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gi<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod _x %<CR>", { silent = true})
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod _x %<CR>", { silent = true })
 
 vim.keymap.set('n', '<leader>;', ':A<CR>', { desc = 'Alternate file' })
+vim.keymap.set('n', '<leader>\\', function()
+    local path = vim.fn.expand('%:p')
+    local target
+    if path:find('/pos_loyalty_new/', 1, true) then
+        target = path:gsub('/pos_loyalty_new/', '/pos_loyalty/')
+    elseif path:find('/pos_loyalty/', 1, true) then
+        target = path:gsub('/pos_loyalty/', '/pos_loyalty_new/')
+    else
+        return vim.notify('Not in pos_loyalty or pos_loyalty_new', vim.log.levels.WARN)
+    end
+    vim.cmd('edit ' .. vim.fn.fnameescape(target))
+end, { desc = 'Toggle pos_loyalty ↔ pos_loyalty_new' })
