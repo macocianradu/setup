@@ -89,6 +89,7 @@ require("lazy").setup({
         },
         'tpope/vim-surround',
         'sphamba/smear-cursor.nvim',
+        'karb94/neoscroll.nvim',
         {
             "folke/persistence.nvim",
             event = "BufReadPre",
