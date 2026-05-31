@@ -12,7 +12,7 @@ local angular_cmd = {
     '--tsProbeLocations',
     project_library_path,
     '--ngProbeLocations',
-    project_library_path .. '@angular/language-server'
+    project_library_path .. '/@angular/language-server'
 }
 
 vim.lsp.config("ts_ls", {})
@@ -49,7 +49,7 @@ vim.lsp.config("eslint", {
     },
 })
 
-vim.lsp.enable({ "angularls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls" })
+vim.lsp.enable({ "angularls", "ts_ls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls" })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
