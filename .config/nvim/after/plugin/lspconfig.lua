@@ -41,12 +41,18 @@ vim.lsp.config("eslint", {
     root_markers = { ".eslintrc", ".eslintrc.json", ".eslintrc.js", "package.json", ".git" },
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
     settings = {
-        validate = "on",
-        packageManager = "npm",
-        workingDirectory = { mode = "auto" },
-        debug = true,
-        format = true,
+        eslint = {
+            validate = "on",
+            packageManager = "npm",
+            workingDirectory = { mode = "auto" },
+            debug = true,
+            format = { enable = true },
+        }
     },
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = true
+        client.server_capabilities.documentRangeFormattingProvider = true
+    end,
 })
 
 vim.lsp.enable({ "angularls", "ts_ls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls" })
