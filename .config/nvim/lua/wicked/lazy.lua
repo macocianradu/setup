@@ -35,18 +35,11 @@ require("lazy").setup({
             end,
         },
         {
-            "thgrund/tidal.nvim",
+            "https://codeberg.org/MrReason/tidal.nvim",
             opts = {
                 boot = {
                     tidal = {
                         cmd = os.getenv("HOME") .. "/.ghcup/bin/ghci",
-                        highlight = {
-                            autostart = true,
-                        },
-                    },
-                    sclang = {
-                        enabled = true,
-                        file = os.getenv("HOME") .. "/.local/share/tidal/BootSuperDirt.scd",
                     },
                 },
             },

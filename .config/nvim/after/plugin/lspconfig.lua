@@ -23,6 +23,7 @@ vim.lsp.config("angularls", {
     end
 })
 vim.lsp.config("ruff", {})
+vim.lsp.config("gopls", {})
 vim.lsp.config("cssls", {})
 vim.lsp.config("lua_ls", {})
 vim.lsp.config("hls", {})
@@ -55,7 +56,7 @@ vim.lsp.config("eslint", {
     end,
 })
 
-vim.lsp.enable({ "angularls", "ts_ls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls" })
+vim.lsp.enable({ "angularls", "ts_ls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls", "gopls" })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),
