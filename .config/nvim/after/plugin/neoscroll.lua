@@ -1,6 +1,8 @@
 local neoscroll = require('neoscroll')
 neoscroll.setup({
     easing = 'quadratic',
+    mappings = {
+    },
 })
 
 local keymap = {
@@ -8,8 +10,6 @@ local keymap = {
     ['<C-d>'] = function() neoscroll.ctrl_d({ duration = 125 }) end,
     ['<C-b>'] = function() neoscroll.ctrl_b({ duration = 200 }) end,
     ['<C-f>'] = function() neoscroll.ctrl_f({ duration = 200 }) end,
-    ['<C-y>'] = function() neoscroll.scroll(-0.1, { move_cursor = false, duration = 60 }) end,
-    ['<C-e>'] = function() neoscroll.scroll(0.1, { move_cursor = false, duration = 60 }) end,
     ['zt']    = function() neoscroll.zt({ half_win_duration = 125 }) end,
     ['zz']    = function() neoscroll.zz({ half_win_duration = 125 }) end,
     ['zb']    = function() neoscroll.zb({ half_win_duration = 125 }) end,
