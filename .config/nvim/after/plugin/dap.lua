@@ -10,6 +10,7 @@ dap.listeners.after.event_exited["dapui_config"] = function() dapui.close() end
 local dotnet = require("dap.dap-dotnet")
 local odoo = require("dap.dap-odoo")
 local haskell = require("dap.dap-haskell")
+local go = require("dap.dap-go")
 
 
 vim.keymap.set("n", "<leader>5", function()
@@ -18,6 +19,10 @@ vim.keymap.set("n", "<leader>5", function()
         return
     end
     local ft = vim.bo.filetype
+    if ft == "go" then
+        go.debug_go()
+        return
+    end
     if ft == "cs" or ft == "fsharp" or ft == "vb" then
         dotnet.debug_dotnet_from_sln()
         return
@@ -39,7 +44,9 @@ vim.keymap.set("n", "<leader>b", function() dap.toggle_breakpoint() end)
 vim.keymap.set("n", "<leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
 vim.keymap.set("n", "<leader>qd", function() dap.terminate() end)
 vim.keymap.set("n", "<leader>rd", function() dap.restart() end)
-vim.keymap.set("n", "<leader>dt", odoo.run_odoo_test_at_cursor, { desc = "Debug Odoo Test unde Cursor" })
+vim.keymap.set("n", "<leader>dt", function()
+    odoo.run_odoo_test_at_cursor()
+end, { desc = "Debug Test under Cursor" })
 
 dap.configurations.python = {
     {
