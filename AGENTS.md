@@ -24,7 +24,7 @@ Leader key is `<Space>`, set in both `remap.lua` and `set.lua` (the duplicate in
 ## Notable plugin choices
 
 - **lazy.nvim** with `checker.enabled = true` (auto-checks for updates daily).
-- **snacks.nvim** is used for picker/terminal/etc. — it replaced telescope (see commit `12db5d8`). Don't reintroduce telescope.
+- **snacks.nvim** is used for picker/dashboard/indent/image (its terminal was removed — terminals live outside nvim) — it replaced telescope (see commit `12db5d8`). Don't reintroduce telescope.
 - **everforest** is the active colorscheme; nord is installed but not active.
 - **codecompanion.nvim** pinned to `^18.0.0`.
 - **roslyn.nvim** for C# LSP (separate from the standard `nvim-lspconfig` flow).
