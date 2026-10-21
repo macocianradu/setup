@@ -60,7 +60,8 @@ require("lazy").setup({
             branch = 'harpoon2',
             dependencies = { 'nvim-lua/plenary.nvim' }
         },
-        'petertriho/nvim-scrollbar',
+        -- v2 lands on main on 2026-11-16; drop the branch pin after that
+        { 'petertriho/nvim-scrollbar', branch = 'refactor/v2' },
         'mbbill/undotree',
         {
             "MeanderingProgrammer/render-markdown.nvim",

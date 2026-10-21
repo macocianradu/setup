@@ -1,20 +1,20 @@
 require("scrollbar").setup({
     -- Shows marks for gitsigns (add, change, delete)
-    handlers = {
+    providers = {
         gitsigns = true,
     },
     -- You can customize the marks used
     marks = {
-        GitAdd = { color = "#39993A" },
-        GitChange = { color = "#61AFEF" },
-        GitDelete = { color = "#E06C75" },
-        DiagnosticError = { color = "#E06C75" },
-        DiagnosticWarn = { color = "#E5C07B" },
-        DiagnosticInfo = { color = "#61AFEF" },
-        DiagnosticHint = { color = "#C678DD" },
+        GitAdd = { highlight = { fg = "#39993A" } },
+        GitChange = { highlight = { fg = "#61AFEF" } },
+        GitDelete = { highlight = { fg = "#E06C75" } },
+        Error = { highlight = { fg = "#E06C75" } },
+        Warn = { highlight = { fg = "#E5C07B" } },
+        Info = { highlight = { fg = "#61AFEF" } },
+        Hint = { highlight = { fg = "#C678DD" } },
     },
-    handle = { color = "#a7c979", },
+    scrollbar = {
+        track = { highlight = { bg = "#2d353b" } },
+        thumb = { highlight = { bg = "#7fbbb3" } },
+    },
 })
-
-vim.api.nvim_set_hl(0, "Scrollbar", { bg = "#2d353b" })
-vim.api.nvim_set_hl(0, "ScrollbarHandle", { bg = "#7fbbb3" })
