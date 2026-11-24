@@ -37,6 +37,16 @@ vim.lsp.config("qmlls", {
     cmd = { "qmlls6", "-E" }
 })
 vim.lsp.config("lemminx", {})
+
+local has_schemastore, schemastore = pcall(require, "schemastore")
+vim.lsp.config("jsonls", {
+    settings = {
+        json = {
+            schemas = has_schemastore and schemastore.json.schemas() or {},
+            validate = { enable = true },
+        },
+    },
+})
 vim.lsp.config("eslint", {
     cmd = { "vscode-eslint-language-server", "--stdio" },
     root_markers = { ".eslintrc", ".eslintrc.json", ".eslintrc.js", "package.json", ".git" },
@@ -56,7 +66,15 @@ vim.lsp.config("eslint", {
     end,
 })
 
-vim.lsp.enable({ "angularls", "ts_ls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls", "gopls" })
+vim.lsp.enable({ "angularls", "ts_ls", "odoo_ls", "hls", "ruff", "eslint", "cssls", "lua_ls", "lemminx", "qmlls", "gopls", "jsonls" })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = vim.api.nvim_create_augroup("user_json_format", { clear = true }),
+    pattern = { "*.json", "*.jsonc" },
+    callback = function(event)
+        vim.lsp.buf.format({ bufnr = event.buf, name = "jsonls", async = false })
+    end,
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('user_lsp_attach', { clear = true }),

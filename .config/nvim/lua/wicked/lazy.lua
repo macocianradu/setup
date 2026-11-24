@@ -126,6 +126,7 @@ require("lazy").setup({
             config = true
         },
         'neovim/nvim-lspconfig',
+        { 'b0o/SchemaStore.nvim', lazy = true, version = false },
         {
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
