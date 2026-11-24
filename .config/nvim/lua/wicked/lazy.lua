@@ -53,7 +53,11 @@ require("lazy").setup({
         {
             'nvim-treesitter/nvim-treesitter',
             lazy = false,
-            build = ':TSUpdate'
+            -- :TSUpdate is async, so quitting right after :Lazy update leaves
+            -- old parsers next to the new (symlinked) queries. Block until done.
+            build = function()
+                require('nvim-treesitter').update():wait(300000)
+            end
         },
         {
             'theprimeagen/harpoon',
@@ -63,6 +67,7 @@ require("lazy").setup({
         -- v2 lands on main on 2026-11-16; drop the branch pin after that
         { 'petertriho/nvim-scrollbar', branch = 'refactor/v2' },
         'mbbill/undotree',
+        'lervag/vimtex',
         {
             "MeanderingProgrammer/render-markdown.nvim",
             ft = { "markdown", "codecompanion" }

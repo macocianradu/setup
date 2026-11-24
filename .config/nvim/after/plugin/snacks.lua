@@ -34,6 +34,16 @@ require("snacks").setup {
     },
 }
 
+if vim.env.TMUX then
+    local term = require("snacks.image.terminal")
+    pcall(vim.fn.system, { "tmux", "set", "-p", "allow-passthrough", "all" })
+    term.transform = function(data)
+        return ("\027Ptmux;" .. data:gsub("\027", "\027\027")) .. "\027\\"
+    end
+    local name = vim.trim(vim.fn.system({ "tmux", "display-message", "-p", "#{client_termname}" }))
+    term._terminal = { terminal = (name:gsub("^xterm%-", "")), version = "unknown" }
+end
+
 local picker = Snacks.picker
 vim.keymap.set('n', '<leader>pf', function() picker.files() end)
 vim.keymap.set('n', '<C-p>p', function() picker.git_files() end)
